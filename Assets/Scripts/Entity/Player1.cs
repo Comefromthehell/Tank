@@ -12,14 +12,12 @@ namespace Entity
  */
     public class Player1 : MonoBehaviour
     {
-        public float moveSpeed = 3;
-
-        /*垂直方向*/
-        public float h;
-
-        /*水平方向*/
-        public float v;
-
+        //移动速度
+        private float moveSpeed = 3;
+        //旋转速度
+        private float rotaSpeed = 1;
+        //坦克旋转角度
+        private float tankRotationZ = 0f;
         /*枪口方向*/
         private Vector3 bulletEulerAngles;
 
@@ -126,62 +124,52 @@ namespace Entity
             Instantiate(go, GameConst.Player1BornVector3, Quaternion.identity);
         }
 
-
         private void Move()
         {
-            // 垂直方向
-            h = Input.GetAxis("Player1Horizontal");
+            Vector2 position = transform.position;
 
-            // 水平方向
-            v = Input.GetAxis("Player1Vertical");
-
-            // 沿x移动
-            var fixedDeltaTime = Vector3.right * (h * moveSpeed * Time.fixedDeltaTime);
-            transform.Translate(fixedDeltaTime, Space.World);
-
-            // 往右
-            if (h < 0)
+            Vector2 velocityX = gameObject.transform.rotation * new Vector2(moveSpeed, 0);
+            Vector2 velocityY = gameObject.transform.rotation * new Vector2(0, moveSpeed);
+            //移动
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.eulerAngles = new Vector3(0, 0, 90);
-                bulletEulerAngles = new Vector3(0, 0, 90);
+                tankRotationZ += rotaSpeed;
             }
-
-            // 往左
-            if (h > 0)
+            else if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.eulerAngles = new Vector3(0, 0, -90);
-                bulletEulerAngles = new Vector3(0, 0, -90);
+                tankRotationZ -= rotaSpeed;
             }
-
-            if (Math.Abs(h) > 0)
+            else if (Input.GetKey(KeyCode.UpArrow))
             {
-                var audioClip = Resources.Load<AudioClip>(GameConst.DrivingAudio);
-                tankAudio.Stop();
-                tankAudio.clip = audioClip;
-                if (!tankAudio.isPlaying)
-                {
-                    AudioSource.PlayClipAtPoint(audioClip, transform.position);
-                }
-
-                return;
+                position += velocityY * Time.fixedDeltaTime;
             }
-
-
-            // 沿y移动
-            var deltaTime = Vector3.up * (v * moveSpeed * Time.fixedDeltaTime);
-            transform.Translate(deltaTime, Space.World);
-
-            // 往下
-            if (v < 0)
+            else if (Input.GetKey(KeyCode.DownArrow))
             {
-                transform.eulerAngles = new Vector3(0, 0, 180);
-                bulletEulerAngles = new Vector3(0, 0, 180);
+                position -= velocityY * Time.fixedDeltaTime;
             }
+            else if (Input.GetKey(KeyCode.Q))
+            {
+                tankRotationZ += rotaSpeed;
+            }
+            else if (Input.GetKey(KeyCode.E))
+            {
+                tankRotationZ -= rotaSpeed;
+            }
+            transform.eulerAngles = new Vector3(0, 0, tankRotationZ);
+            bulletEulerAngles = new Vector3(0, 0, tankRotationZ);
 
-            // 往上
-            if (!(v > 0)) return;
-            transform.eulerAngles = new Vector3(0, 0, 0);
-            bulletEulerAngles = new Vector3(0, 0, 0);
+            transform.position = position;
+
+            /* 声音部分
+            var audioClip = Resources.Load<AudioClip>(GameConst.DrivingAudio);
+            tankAudio.Stop();
+            tankAudio.clip = audioClip;
+            if (!tankAudio.isPlaying)
+            {
+                AudioSource.PlayClipAtPoint(audioClip, transform.position);
+            }
+            */
         }
+
     }
 }
