@@ -1,7 +1,7 @@
 using Constant;
 using UnityEngine;
 
-namespace Util
+namespace TankGame
 {
     public class MapFactory : MonoBehaviour
     {
@@ -13,8 +13,8 @@ namespace Util
         /// <param name="parent"></param>
         public static void CreateMapItem(string goName, Vector3 vector3, Transform parent)
         {
-            var go = Resources.Load<GameObject>(goName);
-            Instantiate(go, vector3, Quaternion.identity, parent);
+            GameObject prefab = AssetTool.GetSingleton().LoadPrefab(goName);
+            GameObject go = Instantiate(prefab, vector3, Quaternion.identity, parent);
             GameContext.GameObjectMap.Add($"{vector3.x}-{vector3.y}", go);
         }
 
@@ -26,8 +26,10 @@ namespace Util
         /// <returns></returns>
         public static bool IsEmpty(Vector3 vector3)
         {
-            GameContext.GameObjectMap.TryGetValue($"{vector3.x}-{vector3.y}", out var go);
-            return go == null;
+            if (GameContext.GameObjectMap.ContainsKey($"{vector3.x}-{vector3.y}"))
+                return false;
+
+            return true;
         }
     }
 }

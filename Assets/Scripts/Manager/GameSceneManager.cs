@@ -1,14 +1,8 @@
 ﻿using Constant;
 using UnityEngine;
-using Util;
 
-namespace Manager
+namespace TankGame
 {
-    /**
-*  作   者 ：胡朋
-*  github : https://github.com/houko
-*  描   述 ：
-*/
     public class GameSceneManager : MonoBehaviour
     {
         /*敌人prefab列表*/
@@ -51,7 +45,11 @@ namespace Manager
 
         private void CreatePlayer1()
         {
-            MapFactory.CreateMapItem(GameConst.BornPrefab1, GameConst.Player1BornVector3, transform);
+            AttackTank atkTank = new AttackTank(GameConst.BornPrefab1);
+            CommonUtilty.AddChild(gameObject, atkTank.TankGameObject);
+            Vector3 vector3 = GameConst.Player1BornVector3;
+            atkTank.SetPosition(vector3);
+            GameContext.GameObjectMap.Add($"{vector3.x}-{vector3.y}", atkTank.TankGameObject);
         }
 
 

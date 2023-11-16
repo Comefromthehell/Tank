@@ -33,9 +33,9 @@ namespace Entity
         private void Awake()
         {
             tankAudio = GetComponent<AudioSource>();
-            bulltePrefab = Resources.Load<GameObject>(GameConst.PlayerBulletPrefab);
-            exploadEffPrefab = Resources.Load<GameObject>(GameConst.ExplodePrefab);
-            bornEffPrefab = Resources.Load<GameObject>(GameConst.BornPrefab1);
+            bulltePrefab = TankGame.AssetTool.GetSingleton().LoadPrefab(GameConst.PlayerBulletPrefab);
+            exploadEffPrefab = TankGame.AssetTool.GetSingleton().LoadPrefab(GameConst.ExplodePrefab);
+            bornEffPrefab = TankGame.AssetTool.GetSingleton().LoadPrefab(GameConst.BornPrefab1);
         }
 
         private void Update()
@@ -73,9 +73,9 @@ namespace Entity
 
         private void Attack()
         {
-            if(Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
-                if(attackTime < bulletCD)
+                if (attackTime < bulletCD)
                 {
                     attackTime += Time.deltaTime;
                 }
@@ -147,7 +147,7 @@ namespace Entity
                 position.x -= distanceCnt;
                 tankRotationZ = 90;
             }
-            else if(Input.GetKey(KeyCode.UpArrow))
+            else if (Input.GetKey(KeyCode.UpArrow))
             {
                 position.y += distanceCnt;
                 tankRotationZ = 0;
