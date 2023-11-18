@@ -12,11 +12,11 @@ namespace TankGame
     {
         public static GameManager instance;
 
-        public bool isInited = false;
+        private bool isInited = false;
         public bool isEditor = false;
         //进度条
-        int mInitProgressValue = 50;
-        int mCurInitProgress = 50;
+        private int mInitProgressValue = 50;
+        private int mCurInitProgress = 50;
         GameObject mInitProgressObj = null;
         void Awake()
         {

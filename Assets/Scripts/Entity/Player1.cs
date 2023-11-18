@@ -1,6 +1,8 @@
 ﻿using System;
 using Constant;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Entity
 {
@@ -29,6 +31,7 @@ namespace Entity
         private GameObject bulltePrefab = null;
         private GameObject exploadEffPrefab = null;
         private GameObject bornEffPrefab = null;
+        private KeyCode inputKey;
 
         private void Awake()
         {
@@ -136,11 +139,17 @@ namespace Entity
             Vector2 position = transform.position;
 
             float distanceCnt = moveSpeed * Time.fixedDeltaTime;
+
             //移动
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 position.x += distanceCnt;
                 tankRotationZ = -90;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                position.y -= distanceCnt;
+                tankRotationZ = 180;
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
@@ -152,39 +161,6 @@ namespace Entity
                 position.y += distanceCnt;
                 tankRotationZ = 0;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                position.y -= distanceCnt;
-                tankRotationZ = 180;
-            }
-
-            //Vector2 velocityY = gameObject.transform.rotation * new Vector2(0, moveSpeed);
-            //if (Input.GetKey(KeyCode.LeftArrow))
-            //{
-            //    tankRotationZ += rotaSpeed;
-            //}
-            //else if (Input.GetKey(KeyCode.RightArrow))
-            //{
-            //    tankRotationZ -= rotaSpeed;
-            //}
-
-            //if (Input.GetKey(KeyCode.UpArrow))
-            //{
-            //    position += velocityY * Time.fixedDeltaTime;
-            //}
-            //else if (Input.GetKey(KeyCode.DownArrow))
-            //{
-            //    position -= velocityY * Time.fixedDeltaTime;
-            //}
-
-            //else if (Input.GetKey(KeyCode.Q))
-            //{
-            //    tankRotationZ += rotaSpeed;
-            //}
-            //else if (Input.GetKey(KeyCode.E))
-            //{
-            //    tankRotationZ -= rotaSpeed;
-            //}
 
             transform.eulerAngles = new Vector3(0, 0, tankRotationZ);
             bulletEulerAngles = new Vector3(0, 0, tankRotationZ);
