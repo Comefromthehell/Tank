@@ -24,8 +24,8 @@ namespace TankGame
             //float h = (Time.timeScale < 0.01 ? Input.GetAxisRaw("Horizontal") : Input.GetAxis("Horizontal")) + (thumbController != null ? thumbController.joystickAxis.x : 0.0f);
             //float v = (Time.timeScale < 0.01 ? Input.GetAxisRaw("Vertical") : Input.GetAxis("Vertical")) + (thumbController != null ? thumbController.joystickAxis.y : 0.0f);
 
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
+            float h = Input.GetAxis("Player1Horizontal");
+            float v = Input.GetAxis("Player1Vertical");
 
             //摇杆节点，后期可能会用
             //if (thumbController != null)

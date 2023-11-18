@@ -31,7 +31,6 @@ namespace Entity
         private GameObject bulltePrefab = null;
         private GameObject exploadEffPrefab = null;
         private GameObject bornEffPrefab = null;
-        private KeyCode inputKey;
 
         private void Awake()
         {
